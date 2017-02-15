@@ -12,30 +12,30 @@ namespace RockPaperScissorsLizardSpock
         {
 
         }
-
-        switch (player2Choice)
+        public int CalculateWinner(string player1Name, string player2Name, int player2Choice)
         {
-            case 1:
-                Console.WriteLine("Player 1 wins this round");
-                break;
-            case 2:
-                Console.WriteLine("Ai Wins this round!");
-                break;
-            case 3:
-                Console.WriteLine("It's a tie!");
-                break;
-            case 4:
-                Console.WriteLine("Player 1 wins this round");
-                break;
-            case 5:
-                Console.WriteLine("Ai Wins this round");
-                break;
-            default:
-                break;
+            switch (player2Choice)
+            {
+                case 1:
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Scissor\n{player1Name} wins this round");
+                    return 1;
+                case 2:
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Paper\n{player2Name} Wins this round!");
+                    return 2;
+                case 3:
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Rock\nIt's a tie!");
+                    return 0;
+                case 4:
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Lizard\n{player1Name} wins this round");
+                    return 1;
+                case 5:
+                    Console.WriteLine($"\n{player1Name}: Rock\n{player2Name}: Spock\n{player2Name} Wins this round");
+                    return 2;
+                default:
+                    return 3;
 
+            }
         }
-
-
-
-}
+        
+    }
 }

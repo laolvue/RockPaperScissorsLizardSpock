@@ -15,9 +15,9 @@ namespace RockPaperScissorsLizardSpock
 
         }
 
-        public string PromptPlayerName()
+        public string PromptPlayerName(int playerNumber)
         {
-            Console.Write($"Enter Player name: ");
+            Console.Write($"\nEnter Player {playerNumber} name: ");
             playerName = Console.ReadLine();
             return (playerName);
         }
