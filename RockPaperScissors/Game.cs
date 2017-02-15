@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace RockPaperScissorsLizardSpock
 {
-    class Game
+    public class Game
     {
         Person player1;
         Person player2;
         Ai ai;
+        Scissor scissor;
+        public int player2Choice;
+
 
         public Game()
         {
             player1 = new Person();
             player2 = new Person();
             ai = new Ai();
+            scissor = new Scissor();
         }
 
         public void DisplayRules()
@@ -49,9 +53,25 @@ namespace RockPaperScissorsLizardSpock
             Console.WriteLine("\nThe Game is starting!\n1: Scissors\t2: Paper\t3: Rock\n4: Lizard\t5: Spock");
             if (gameMode == 1)
             {
-                player1.PlayerChoice();
-                ai.AiChoice();
+                int playerPick = player1.PlayerChoice();
+                player2Choice = ai.AiChoice();
+
             }
+        }
+
+        public void DetermineWinner(playerPick)
+        {
+            switch (playerPick)
+            {
+                case 1: scissor.CalculateWinner(player2Choice);
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+
+            }
+
         }
 
 

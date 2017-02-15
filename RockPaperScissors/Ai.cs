@@ -12,16 +12,13 @@ namespace RockPaperScissorsLizardSpock
         //random.next(1,100);
         public Ai()
         {
-            choice = new Random();
+            randomizeChoice = new Random();
         }
 
-        public void AiChoice()
+        public int AiChoice()
         {
-
             int choice = randomizeChoice.Next(1, 6);
-            Console.WriteLine(choice);
-
-
+            return(choice);
         }
 
     }
