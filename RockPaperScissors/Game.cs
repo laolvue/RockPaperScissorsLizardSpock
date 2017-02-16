@@ -189,6 +189,7 @@ namespace RockPaperScissorsLizardSpock
             {
                 if (i > 0)
                 {
+
                     Console.WriteLine("Invalid entry.Try again.\n");
                 }
                 endOfGame = PromptInputNumber("Would you like to play again? 1= yes\t2= no", TestNumber);
