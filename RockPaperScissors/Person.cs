@@ -10,18 +10,16 @@ namespace RockPaperScissorsLizardSpock
 {
     public class Person
     {
-
-        Regex letters = new Regex(@"^[a-zA-Z ]*$");
+        Game personGame;
+        Regex letters = new Regex(@"^[a-zA-Z0-9 ]*$");
         public Person()
         {
-
+            personGame = new Game(0);
         }
-        
 
-        public bool numbers(string playerName)
+        public bool TestLetters(string playerName)
         {
             bool sts = letters.IsMatch(playerName);
-            Console.WriteLine(playerName);
             if (sts && playerName != "")
             {
                 return (true);
@@ -30,29 +28,36 @@ namespace RockPaperScissorsLizardSpock
                 return (false);
         }
 
-        public string prompty(string name, Func<string,bool> numb)
+        public string PromptInputLetters(string name, Func<string,bool> testLetters)
         {
             string playerName;
             do
             {
                 Console.Write(name);
                 playerName = Console.ReadLine();
-            } while (!numb(playerName));
+            } while (!testLetters(playerName));
             return playerName;
         } 
 
-
         public string PromptPlayerName(int playerNumber)
         {
-            string playerName = prompty($"\nEnter Player {playerNumber} name: ", numbers);
+            string playerName = PromptInputLetters($"\nEnter Player {playerNumber} name: ", TestLetters);
             return playerName;
         }
-
-
+        
         public int PlayerChoice(string playerName)
         {
-            Console.Write($"{playerName}, please enter your choice: ");
-            int choice = int.Parse(Console.ReadLine());
+            int choice,i=0;
+            do
+            {
+                if (i > 0)
+                {
+                    Console.WriteLine("Invalid entry.Try again.\n");
+                }
+                choice = personGame.PromptInputNumber($"{playerName}, please enter your choice: ", personGame.TestNumber);
+                i++;
+
+            } while (choice == 0 || choice > 5);
             return (choice);
         }
     }

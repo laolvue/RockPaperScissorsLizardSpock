@@ -33,9 +33,7 @@ namespace RockPaperScissorsLizardSpock
                     return 2;
                 default:
                     return 3;
-
             }
         }
-        
     }
 }

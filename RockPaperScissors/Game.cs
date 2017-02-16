@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace RockPaperScissorsLizardSpock
 {
@@ -22,8 +23,12 @@ namespace RockPaperScissorsLizardSpock
         public string player1Name;
         public int player1Points;
         public int player2Points;
+        Regex numbers = new Regex(@"^[0-9]*$");
 
+        public Game(int test)
+        {
 
+        }
         public Game()
         {
             this.player1 = new Person();
@@ -45,33 +50,44 @@ namespace RockPaperScissorsLizardSpock
 
         public int PromptNumberOfPlayers()
         {
-            int value;
-            Console.WriteLine("Enter the game mode you would like to play: 1 = Player vs AI\t\t2 = Player vs Player");
-            string gameMode = Console.ReadLine();
-            value = TestNumber(gameMode);
-            if (value == 10101)
+            int gameMode, i=0;
+            do
             {
-                return PromptNumberOfPlayers();
+                if (i > 0)
+                {
+                    Console.WriteLine("Invalid entry. Try again.\n");
+                }
+                gameMode = PromptInputNumber("Enter the game mode you would like to play: 1 = Player vs AI\t\t2 = Player vs Player", TestNumber);
+                i++;
+            } while (gameMode == 0 || gameMode>2);
+            
+            return gameMode;
+        }
+        public bool TestNumber(string input)
+        {
+            bool sts = numbers.IsMatch(input);
+            if (sts && input != "")
+            {
+                return (true);
             }
             else
-                return value;
+                Console.WriteLine("Invalid entry. Try again.\n");
+                return (false);
         }
 
-        public int TestNumber(string input)
+        public int PromptInputNumber(string input, Func<string,bool> test)
         {
-            int value;
-            if (int.TryParse(input, out value) && value < 3)
+            string userInput;
+            do
             {
-                return (value);
-            }
-            else
-            {
-                Console.WriteLine("Invalid entry. Try again.");
-                return 10101;
-            }
+                Console.WriteLine(input);
+                userInput = Console.ReadLine();
+            } while (!test(userInput));
+            int gameMode = int.Parse(userInput);
+            return gameMode;
         }
-          
-public void PromptNames(int gameMode)
+
+        public void PromptNames(int gameMode)
         {
             if (gameMode == 1)
             {
@@ -111,7 +127,7 @@ public void PromptNames(int gameMode)
                 case 3: return rock.CalculateWinner(player1Name, player2Name, player2Pick);
                 case 4: return lizard.CalculateWinner(player1Name, player2Name, player2Pick);
                 case 5: return spock.CalculateWinner(player1Name, player2Name, player2Pick);
-                default: Console.WriteLine("Your entry was invalid");
+                default: Console.WriteLine("Invalid entry. Try again.\n");
                     return 3;
             }
 
@@ -141,8 +157,9 @@ public void PromptNames(int gameMode)
 
         public int endGame()
         {
-            int value;
             string winner;
+            int endOfGame;
+            int i = 0;
             if(player1Points == 3)
             {
                 winner = player1Name;
@@ -151,20 +168,20 @@ public void PromptNames(int gameMode)
             {
                 winner = player2Name;
             }
-
-
             Console.WriteLine($"\n\n{winner} is the winner!");
-            Console.WriteLine("Would you like to play again? 1= yes\t2= no");
-            string input = Console.ReadLine();
-            value = TestNumber(input);
-            if (value == 10101)
+            do
             {
-                return endGame();
-            }
-            else
-                Console.WriteLine("\n\n");
-                return value;
-        } 
+                if (i > 0)
+                {
+                    Console.WriteLine("Invalid entry.Try again.\n");
+                }
+                endOfGame = PromptInputNumber("Would you like to play again? 1= yes\t2= no", TestNumber);
+                i++;
+            
+            } while (endOfGame == 0 || endOfGame > 2);
+            
+            return endOfGame;
+        }
         
         public void RunGame()
         {
