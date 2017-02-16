@@ -18,15 +18,30 @@ namespace RockPaperScissorsLizardSpock
         {
             switch (player2Choice)
             {
-                case 1: Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Scissor\nIt's a tie!");
+                case 1:
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Scissor\nIt's a tie!");
+                    Console.ResetColor();
                     return 0;
-                case 2: Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Paper\n{player1Name} wins this round");
+                case 2:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Paper\n{player1Name} wins this round");
+                    Console.ResetColor();
                     return 1;
-                case 3: Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Rock\n{player2Name} Wins this round");
+                case 3:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Rock\n{player2Name} Wins this round");
+                    Console.ResetColor();
                     return 2;
-                case 4: Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Lizard\n{player1Name} Wins this round");
+                case 4:
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Lizard\n{player1Name} Wins this round");
+                    Console.ResetColor();
                     return 1;
-                case 5: Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Spock\n{player2Name} Wins this round");
+                case 5:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\n{player1Name}: Scissors\n{player2Name}: Spock\n{player2Name} Wins this round");
+                    Console.ResetColor();
                     return 2;
                 default:
                     return 3;
