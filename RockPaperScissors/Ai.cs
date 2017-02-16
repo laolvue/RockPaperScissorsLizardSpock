@@ -9,7 +9,6 @@ namespace RockPaperScissorsLizardSpock
     public class Ai
     {
         public Random randomizeChoice;
-        //random.next(1,100);
         public Ai()
         {
             randomizeChoice = new Random();

@@ -26,16 +26,16 @@ namespace RockPaperScissorsLizardSpock
 
         public Game()
         {
-            player1 = new Person();
-            player2 = new Person();
-            ai = new Ai();
-            scissor = new Scissor();
-            paper = new Paper();
-            rock = new Rock();
-            lizard = new Lizard();
-            spock = new Spock();
-            player1Points = 0;
-            player2Points = 0;
+            this.player1 = new Person();
+            this.player2 = new Person();
+            this.ai = new Ai();
+            this.scissor = new Scissor();
+            this.paper = new Paper();
+            this.rock = new Rock();
+            this.lizard = new Lizard();
+            this.spock = new Spock();
+            this.player1Points = 0;
+            this.player2Points = 0;
         }
 
         public void DisplayRules()
@@ -45,12 +45,33 @@ namespace RockPaperScissorsLizardSpock
 
         public int PromptNumberOfPlayers()
         {
+            int value;
             Console.WriteLine("Enter the game mode you would like to play: 1 = Player vs AI\t\t2 = Player vs Player");
-            int gameMode = int.Parse(Console.ReadLine());
-            return (gameMode);
+            string gameMode = Console.ReadLine();
+            value = TestNumber(gameMode);
+            if (value == 10101)
+            {
+                return PromptNumberOfPlayers();
+            }
+            else
+                return value;
         }
 
-        public void PromptNames(int gameMode)
+        public int TestNumber(string input)
+        {
+            int value;
+            if (int.TryParse(input, out value) && value < 3)
+            {
+                return (value);
+            }
+            else
+            {
+                Console.WriteLine("Invalid entry. Try again.");
+                return 10101;
+            }
+        }
+          
+public void PromptNames(int gameMode)
         {
             if (gameMode == 1)
             {
@@ -70,13 +91,13 @@ namespace RockPaperScissorsLizardSpock
             Console.WriteLine("\nThe Game is starting!\n1: Scissors\t2: Paper\t3: Rock\n4: Lizard\t5: Spock");
             if (gameMode == 1)
             {
-                playerPick = player1.PlayerChoice();
+                playerPick = player1.PlayerChoice(player1Name);
                 player2Pick = ai.AiChoice();
             }
             else if (gameMode == 2)
             {
-                playerPick = player1.PlayerChoice();
-                player2Pick = player2.PlayerChoice();
+                playerPick = player1.PlayerChoice(player1Name);
+                player2Pick = player2.PlayerChoice(player2Name);
 
             }
         }
@@ -120,6 +141,7 @@ namespace RockPaperScissorsLizardSpock
 
         public int endGame()
         {
+            int value;
             string winner;
             if(player1Points == 3)
             {
@@ -130,12 +152,19 @@ namespace RockPaperScissorsLizardSpock
                 winner = player2Name;
             }
 
+
             Console.WriteLine($"\n\n{winner} is the winner!");
             Console.WriteLine("Would you like to play again? 1= yes\t2= no");
-            int input = int.Parse(Console.ReadLine());
-            Console.WriteLine("\n\n");
-            return input;
-        }
+            string input = Console.ReadLine();
+            value = TestNumber(input);
+            if (value == 10101)
+            {
+                return endGame();
+            }
+            else
+                Console.WriteLine("\n\n");
+                return value;
+        } 
         
         public void RunGame()
         {
@@ -161,7 +190,5 @@ namespace RockPaperScissorsLizardSpock
             } while (restart == 1);
             
         }
-
-
     }
 }
