@@ -11,12 +11,28 @@ namespace RockPaperScissorsLizardSpock
     public class Person
     {
         Game personGame;
-        Regex letters = new Regex(@"^[a-zA-Z0-9 ]*$");
+
+        //class that validates user input is a letter or number
+        Regex letters;
         public Person()
         {
             personGame = new Game(0);
+            letters = new Regex(@"^[a-zA-Z0-9 ]*$");
         }
 
+        //Method that validates user input is a letter or number, and returns the input if it's true
+        public string PromptInputLetters(string name, Func<string, bool> testLetters)
+        {
+            string playerName;
+            do
+            {
+                Console.Write(name);
+                playerName = Console.ReadLine();
+            } while (!testLetters(playerName));
+            return playerName;
+        }
+
+        //Method that validates user input is a letter or number
         public bool TestLetters(string playerName)
         {
             bool sts = letters.IsMatch(playerName);
@@ -28,23 +44,16 @@ namespace RockPaperScissorsLizardSpock
                 return (false);
         }
 
-        public string PromptInputLetters(string name, Func<string,bool> testLetters)
-        {
-            string playerName;
-            do
-            {
-                Console.Write(name);
-                playerName = Console.ReadLine();
-            } while (!testLetters(playerName));
-            return playerName;
-        } 
-
+        
+        //Prompts player names
         public string PromptPlayerName(int playerNumber)
         {
             string playerName = PromptInputLetters($"\nEnter Player {playerNumber} name: ", TestLetters);
             return playerName;
         }
-        
+
+
+        //prompts player choice
         public int PlayerChoice(string playerName)
         {
             int choice,i=0;

@@ -10,8 +10,8 @@ namespace RockPaperScissorsLizardSpock
     {
         static void Main(string[] args)
         {
-            Game game = new Game();
-            game.RunGame();
+            Game game = new Game();//instantiate Game class
+            game.RunGame();//calls RunGame method inside Game class
             Console.ReadLine();
         }
     }

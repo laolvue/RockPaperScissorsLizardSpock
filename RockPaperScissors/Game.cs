@@ -9,6 +9,7 @@ namespace RockPaperScissorsLizardSpock
 {
     public class Game
     {
+        //member variables
         Person player1;
         Person player2;
         Ai ai;
@@ -25,10 +26,7 @@ namespace RockPaperScissorsLizardSpock
         public int player2Points;
         Regex numbers = new Regex(@"^[0-9]*$");
 
-        public Game(int test)
-        {
-
-        }
+        //constructor
         public Game()
         {
             this.player1 = new Person();
@@ -43,11 +41,19 @@ namespace RockPaperScissorsLizardSpock
             this.player2Points = 0;
         }
 
-        public void DisplayRules()
+        //constructor
+        public Game(int test)
         {
-            Console.WriteLine("Welcome to \"Rock Paper Scissors Lizard Spock\" the game!");
+
         }
 
+        //display rules
+        public void DisplayRules()
+        {
+            Console.WriteLine("\nWelcome to \"Rock Paper Scissors Lizard Spock\" the game! First player to 3 points first wins! Good Luck.");
+        }
+
+        //prompt game mode user wants to play; playervsplayer or playervsAI
         public int PromptNumberOfPlayers()
         {
             int gameMode, i=0;
@@ -63,6 +69,8 @@ namespace RockPaperScissorsLizardSpock
             
             return gameMode;
         }
+
+        //method to validate user input is a number
         public bool TestNumber(string input)
         {
             bool sts = numbers.IsMatch(input);
@@ -75,6 +83,7 @@ namespace RockPaperScissorsLizardSpock
                 return (false);
         }
 
+        //method to validate user input is a number, and returns the input if it's true
         public int PromptInputNumber(string input, Func<string,bool> test)
         {
             string userInput;
@@ -87,6 +96,7 @@ namespace RockPaperScissorsLizardSpock
             return gameMode;
         }
 
+        //prompt player names
         public void PromptNames(int gameMode)
         {
             if (gameMode == 1)
@@ -102,6 +112,7 @@ namespace RockPaperScissorsLizardSpock
             }
         }
 
+        //prompt for player choices
         public void StartRound(int gameMode)
         {
             Console.WriteLine("\nThe Game is starting!\n1: Scissors\t2: Paper\t3: Rock\n4: Lizard\t5: Spock");
@@ -118,6 +129,7 @@ namespace RockPaperScissorsLizardSpock
             }
         }
 
+        //returns winner of each round
         public int DetermineWinner(int player1Pick)
         {
             switch (player1Pick)
@@ -133,6 +145,7 @@ namespace RockPaperScissorsLizardSpock
 
         }
         
+        //calculate points for each player
         public int CalculatePoints(int points)
         {
             if (points == 1)
@@ -150,11 +163,14 @@ namespace RockPaperScissorsLizardSpock
             }
         }
 
+
+        //display points
         public void DisplayPoints()
         {
             Console.WriteLine($"\nScoreBoard:\t\t{player1Name}: {player1Points}\t{player2Name}: {player2Points}");
         }
 
+        //prompt the user to end game or play again
         public int endGame()
         {
             string winner;
@@ -183,6 +199,7 @@ namespace RockPaperScissorsLizardSpock
             return endOfGame;
         }
         
+        //initial method that gets called to run the game
         public void RunGame()
         {
             int restart;

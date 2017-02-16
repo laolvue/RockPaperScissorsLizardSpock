@@ -12,6 +12,8 @@ namespace RockPaperScissorsLizardSpock
         {
 
         }
+
+        //Method calculates who wins
         public int CalculateWinner(string player1Name, string player2Name, int player2Choice)
         {
             switch (player2Choice)
