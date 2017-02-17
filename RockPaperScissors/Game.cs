@@ -17,9 +17,8 @@ namespace RockPaperScissorsLizardSpock
         Rock rock;
         Lizard lizard;
         Spock spock;
-        public int playerPick;
-        public int player2Pick;
         Regex numbers;
+        public int gameMode;
 
         //constructor
         public Game()
@@ -47,9 +46,9 @@ namespace RockPaperScissorsLizardSpock
         }
 
         //prompt game mode user wants to play; playervsplayer or playervsAI
-        public int PromptNumberOfPlayers()
+        public void PromptNumberOfPlayers()
         {
-            int gameMode, i=0;
+            int i=0;
             do
             {
                 if (i > 0)
@@ -59,8 +58,6 @@ namespace RockPaperScissorsLizardSpock
                 gameMode = PromptInputNumber("Enter the game mode you would like to play: 1 = Player vs AI\t\t2 = Player vs Player", TestNumber);
                 i++;
             } while (gameMode == 0 || gameMode>2);
-            
-            return gameMode;
         }
 
         //method to validate user input is a number
@@ -95,7 +92,7 @@ namespace RockPaperScissorsLizardSpock
             if (gameMode == 1)
             {
                 player.PromptPlayerName(1);
-                player.player2Name = "Ai";
+                ai.PromptPlayerName(2);
             }
             else if (gameMode == 2)
             {
@@ -113,13 +110,13 @@ namespace RockPaperScissorsLizardSpock
             Console.ResetColor();
             if (gameMode == 1)
             {
-                playerPick = player.PlayerChoice(player.player1Name);
-                player2Pick = ai.AiChoice();
+                player.PlayerChoice(player.player1Name);
+                ai.PlayerChoice(ai.player2Name);
             }
             else if (gameMode == 2)
             {
-                playerPick = player.PlayerChoice(player.player1Name);
-                player2Pick = player.PlayerChoice(player.player2Name);
+                player.PlayerChoice(player.player1Name);
+                player.PlayerChoice(player.player2Name);
 
             }
         }
@@ -127,17 +124,32 @@ namespace RockPaperScissorsLizardSpock
         //returns winner of each round
         public int DetermineWinner(int player1Pick)
         {
-            switch (player1Pick)
+            if (gameMode == 1)
             {
-                case 1: return scissor.CalculateWinner(player.player1Name, player.player2Name,player2Pick);
-                case 2: return paper.CalculateWinner(player.player1Name, player.player2Name, player2Pick);
-                case 3: return rock.CalculateWinner(player.player1Name, player.player2Name, player2Pick);
-                case 4: return lizard.CalculateWinner(player.player1Name, player.player2Name, player2Pick);
-                case 5: return spock.CalculateWinner(player.player1Name, player.player2Name, player2Pick);
-                default: Console.WriteLine("Invalid entry. Try again.\n");
-                    return 3;
+                switch (player1Pick)
+                {
+                    case 1: return scissor.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+                    case 2: return paper.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+                    case 3: return rock.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+                    case 4: return lizard.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+                    case 5: return spock.CalculateWinner(player.player1Name, ai.player2Name, ai.player2Pick);
+                    default:
+                        Console.WriteLine("Invalid entry. Try again.\n");
+                        return 3;
+                }
             }
-
+            else
+                switch (player1Pick)
+                {
+                    case 1: return scissor.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+                    case 2: return paper.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+                    case 3: return rock.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+                    case 4: return lizard.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+                    case 5: return spock.CalculateWinner(player.player1Name, player.player2Name, player.player2Pick);
+                    default:
+                        Console.WriteLine("Invalid entry. Try again.\n");
+                        return 3;
+                }
         }
 
 
@@ -159,9 +171,13 @@ namespace RockPaperScissorsLizardSpock
             {
                 winner = player.player1Name;
             }
-            else
+            else if(player.player2Points ==3 && gameMode ==2)
             {
                 winner = player.player2Name;
+            }
+            else
+            {
+                winner = ai.player2Name;
             }
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine($"\n\n{winner} is the winner!");
@@ -185,19 +201,18 @@ namespace RockPaperScissorsLizardSpock
         public void RunGame()
         {
             int restart;
-            do
+            do //loop to restart game
             {
                 DisplayRules();
-                int gameMode = PromptNumberOfPlayers();
+                PromptNumberOfPlayers();
                 PromptNames(gameMode);
 
-                while (player.player1Points < 3 && player.player2Points < 3)
+                while (player.player1Points < 3 && player.player2Points < 3)//loop to run rounds until a player gets 3 points
                 {
                     StartRound(gameMode);
-                    player.CalculatePoints(DetermineWinner(playerPick));
+                    player.CalculatePoints(DetermineWinner(player.player1Pick));
                     DisplayPoints();
                 }
-
                 restart = endGame();
                 player.player1Points = 0;
                 player.player2Points = 0;

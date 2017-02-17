@@ -8,6 +8,7 @@ namespace RockPaperScissorsLizardSpock
 {
     public class Scissor
     {
+        //constructor
         public Scissor()
         {
 
