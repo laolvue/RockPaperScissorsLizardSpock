@@ -216,6 +216,7 @@ namespace RockPaperScissorsLizardSpock
                 restart = endGame();
                 player.player1Points = 0;
                 player.player2Points = 0;
+                Console.Clear();
             } while (restart == 1);
 
             Environment.Exit(0);
